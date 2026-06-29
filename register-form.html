@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Student Registration Form</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI,sans-serif;
+}
+
+body{
+
+background:linear-gradient(135deg,#4f46e5,#7c3aed);
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:20px;
+
+}
+
+.container{
+
+width:100%;
+max-width:550px;
+background:#e4b6de;
+padding:30px;
+border-radius:15px;
+box-shadow:0 10px 30px rgba(0,0,0,.2);
+
+}
+
+h2{
+
+text-align:center;
+margin-bottom:25px;
+color:#333;
+
+}
+
+.form-group{
+
+margin-bottom:18px;
+
+}
+
+label{
+
+display:block;
+margin-bottom:6px;
+font-weight:600;
+color:#444;
+
+}
+
+input,select{
+
+width:100%;
+padding:12px;
+border:1px solid #ccc;
+border-radius:8px;
+font-size:15px;
+transition:.3s;
+
+}
+
+input:focus,
+select:focus{
+
+border-color:#4f46e5;
+outline:none;
+
+}
+
+.gender{
+
+display:flex;
+gap:20px;
+margin-top:10px;
+
+}
+
+.gender label{
+
+display:flex;
+align-items:center;
+gap:5px;
+font-weight:normal;
+
+}
+
+.gender input{
+
+width:auto;
+
+}
+
+.btn{
+
+width:100%;
+padding:14px;
+background:#4f46e5;
+color:white;
+border:none;
+border-radius:8px;
+font-size:17px;
+cursor:pointer;
+transition:.3s;
+
+}
+
+.btn:hover{
+
+background:#372fc9;
+
+}
+
+.footer{
+
+margin-top:20px;
+text-align:center;
+color:#777;
+
+}
+
+.error{
+
+color:red;
+font-size:13px;
+margin-top:4px;
+
+}
+
+.success{
+
+color:green;
+text-align:center;
+font-weight:bold;
+margin-bottom:15px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>🎓 Student Registration Form</h2>
+
+<div id="success" class="success"></div>
+
+<form id="studentForm">
+
+<div class="form-group">
+
+<label>First Name</label>
+
+<input
+type="text"
+id="fname"
+placeholder="Enter First Name">
+
+<div class="error" id="fnameError"></div>
+
+</div>
+
+<div class="form-group">
+
+<label>Last Name</label>
+
+<input
+type="text"
+id="lname"
+placeholder="Enter Last Name">
+
+<div class="error" id="lnameError"></div>
+
+</div>
+
+<div class="form-group">
+
+<label>Email Address</label>
+
+<input
+type="email"
+id="email"
+placeholder="example@gmail.com">
+
+<div class="error" id="emailError"></div>
+
+</div>
+
+<div class="form-group">
+
+<label>Phone Number</label>
+
+<input
+type="text"
+id="phone"
+placeholder="+2507XXXXXXXX">
+
+<div class="error" id="phoneError"></div>
+
+</div>
+
+<div class="form-group">
+
+<label>Date of Birth</label>
+
+<input
+type="date"
+id="dob">
+
+<div class="error" id="dobError"></div>
+
+</div>
+
+<div class="form-group">
+
+<label>Gender</label>
+
+<div class="gender">
+
+<label>
+<input type="radio" name="gender" value="Male">
+Male
+</label>
+
+<label>
+<input type="radio" name="gender" value="Female">
+Female
+</label>
+
+</div>
+
+<div class="error" id="genderError"></div>
+
+</div>
+
+<div class="form-group">
+
+<label>Department</label>
+
+<select id="department">
+
+<option value="">Select Department</option>
+
+<option>Software Development</option>
+
+<option>Networking</option>
+
+<option>Accounting</option>
+
+<option>Building Construction</option>
+
+<option>Electrical Technology</option>
+
+</select>
+
+<div class="error" id="departmentError"></div>
+
+</div>
+
+<div class="form-group">
+
+<label>Address</label>
+
+<input
+type="text"
+id="address"
+placeholder="Enter Address">
+
+<div class="error" id="addressError"></div>
+
+</div>
+
+<button class="btn">
+
+Register Student
+
+</button>
+
+</form>
+
+<div class="footer">
+
+Innovate Company Ltd © 2026
+
+</div>
+
+</div>
+
+<script>
+
+const form=document.getElementById("studentForm");
+
+form.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+document.querySelectorAll(".error").forEach(el=>el.innerHTML="");
+
+document.getElementById("success").innerHTML="";
+
+let first=document.getElementById("fname").value.trim();
+
+let last=document.getElementById("lname").value.trim();
+
+let email=document.getElementById("email").value.trim();
+
+let phone=document.getElementById("phone").value.trim();
+
+let dob=document.getElementById("dob").value;
+
+let department=document.getElementById("department").value;
+
+let address=document.getElementById("address").value.trim();
+
+let gender=document.querySelector("input[name='gender']:checked");
+
+let valid=true;
+
+const nameRegex=/^[A-Za-z ]+$/;
+
+const emailRegex=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const phoneRegex=/^(\+250|0)7[2389][0-9]{7}$/;
+
+if(first==""){
+
+document.getElementById("fnameError").innerHTML="First Name is required.";
+
+valid=false;
+
+}
+else if(!nameRegex.test(first)){
+
+document.getElementById("fnameError").innerHTML="Letters only.";
+
+valid=false;
+
+}
+
+if(last==""){
+
+document.getElementById("lnameError").innerHTML="Last Name is required.";
+
+valid=false;
+
+}
+else if(!nameRegex.test(last)){
+
+document.getElementById("lnameError").innerHTML="Letters only.";
+
+valid=false;
+
+}
+
+if(email==""){
+
+document.getElementById("emailError").innerHTML="Email is required.";
+
+valid=false;
+
+}
+else if(!emailRegex.test(email)){
+
+document.getElementById("emailError").innerHTML="Invalid Email.";
+
+valid=false;
+
+}
+
+if(phone==""){
+
+document.getElementById("phoneError").innerHTML="Phone Number is required.";
+
+valid=false;
+
+}
+else if(!phoneRegex.test(phone)){
+
+document.getElementById("phoneError").innerHTML="Invalid Rwanda phone number.";
+
+valid=false;
+
+}
+
+if(dob==""){
+
+document.getElementById("dobError").innerHTML="Date of Birth required.";
+
+valid=false;
+
+}
+else{
+
+let birth=new Date(dob);
+
+let today=new Date();
+
+let age=today.getFullYear()-birth.getFullYear();
+
+let month=today.getMonth()-birth.getMonth();
+
+if(month<0||(month===0&&today.getDate()<birth.getDate())){
+
+age--;
+
+}
+
+if(age<16){
+
+document.getElementById("dobError").innerHTML="Student must be at least 16 years old.";
+
+valid=false;
+
+}
+
+}
+
+if(!gender){
+
+document.getElementById("genderError").innerHTML="Select Gender.";
+
+valid=false;
+
+}
+
+if(department==""){
+
+document.getElementById("departmentError").innerHTML="Select Department.";
+
+valid=false;
+
+}
+
+if(address==""){
+
+document.getElementById("addressError").innerHTML="Address is required.";
+
+valid=false;
+
+}
+else if(address.length<5){
+
+document.getElementById("addressError").innerHTML="Address too short.";
+
+valid=false;
+
+}
+
+if(valid){
+
+document.getElementById("success").innerHTML="✅ Student Registered Successfully!";
+
+form.reset();
+
+}
+
+});
+
+</script>
+
+</body>
+</html>
